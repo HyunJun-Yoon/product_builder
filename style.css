@@ -32,26 +32,25 @@ body {
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.6;
-    padding-top: 60px; /* Add padding to body to prevent content from being hidden by fixed header */
 }
 
 #theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: var(--button-bg-color);
-    color: white;
+    position: absolute; /* Position absolutely within the container */
+    top: 15px;
+    right: 15px;
+    background-color: transparent; /* Make background transparent for a cleaner look */
+    color: var(--text-color); /* Use theme text color */
     padding: 8px 15px;
     border-radius: 5px;
     font-size: 14px;
-    z-index: 1000; /* Ensure it stays on top */
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: 1px solid var(--input-border-color); /* Add a border for better definition */
+    border: 1px solid var(--input-border-color); /* Subtle border */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 #theme-toggle:hover {
-    background-color: var(--button-hover-bg-color);
-    cursor: pointer;
+    background-color: var(--input-border-color); /* Slight background on hover */
+    color: var(--text-color);
 }
 
 .main-content-wrapper {
@@ -73,6 +72,7 @@ body {
     box-shadow: none; /* Remove redundant shadow */
     border-radius: 0; /* Remove redundant border-radius */
     background-color: transparent; /* Make background transparent as wrapper handles it */
+    position: relative; /* Establish positioning context for absolute button */
 }
 
 /* Disqus Section Styling */

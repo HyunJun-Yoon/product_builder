@@ -7,10 +7,10 @@
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <button id="theme-toggle">Toggle Theme</button>
   <div class="main-content-wrapper">
     <div class="container">
-    <h1>Lotto Number Generator</h1>
+      <button id="theme-toggle">Toggle Theme</button>
+      <h1>Lotto Number Generator</h1>
 
     <div class="controls">
       <label for="num-balls">Number of Balls:</label>
@@ -52,12 +52,13 @@
       /**
       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-      /*
+      
       var disqus_config = function () {
-      this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = window.location.href;  // Use current page's URL
+      this.page.identifier = 'lotto-generator-page'; // A unique identifier for this page
+      this.page.title = 'Lotto Number Generator with Contact Form and Comments'; // Page title
       };
-      */
+      
       (function() { // DON'T EDIT BELOW THIS LINE
           var d = document, s = d.createElement('script');
           s.src = 'https://productbuilder-aeu448itdo.disqus.com/embed.js';
