@@ -5,19 +5,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const lottoNumbersDiv = document.getElementById('lotto-numbers');
     const themeToggleButton = document.getElementById('theme-toggle');
     const body = document.body;
+    const html = document.documentElement; // Get the HTML element
+
+    // Function to apply theme
+    function applyTheme(theme) {
+        body.classList.remove('dark-mode');
+        html.dataset.theme = 'light'; // Default to light
+
+        if (theme === 'dark-mode') {
+            body.classList.add('dark-mode');
+            html.dataset.theme = 'dark';
+        }
+    }
 
     // Apply saved theme on load
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
-        body.classList.add(savedTheme);
+        applyTheme(savedTheme);
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         // If no saved theme, check system preference
-        body.classList.add('dark-mode');
+        applyTheme('dark-mode');
+    } else {
+        applyTheme('light-mode'); // Default to light if no preference
     }
 
     themeToggleButton.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        const currentTheme = body.classList.contains('dark-mode') ? 'dark-mode' : '';
+        const currentTheme = body.classList.contains('dark-mode') ? 'light-mode' : 'dark-mode';
+        applyTheme(currentTheme);
         localStorage.setItem('theme', currentTheme);
     });
 
