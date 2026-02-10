@@ -26,23 +26,43 @@ body.dark-mode {
 
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+}
+
+.main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    max-width: 800px; /* Max width for readability */
+    margin: 20px auto; /* Center the wrapper and add vertical margin */
+    padding: 20px;
+    background-color: var(--container-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container {
-    background-color: var(--container-bg-color);
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Take full width of main-content-wrapper */
     text-align: center;
-    transition: background-color 0.3s ease;
+    box-shadow: none; /* Remove redundant shadow */
+    border-radius: 0; /* Remove redundant border-radius */
+    background-color: transparent; /* Make background transparent as wrapper handles it */
+}
+
+/* Disqus Section Styling */
+.disqus-section {
+    width: 100%;
+    max-width: 700px; /* Adjust as needed */
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--input-border-color);
+    text-align: left; /* Align Disqus content to the left within its section */
 }
 
 h1 {

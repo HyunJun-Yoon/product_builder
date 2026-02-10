@@ -7,7 +7,8 @@
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <div class="container">
+  <div class="main-content-wrapper">
+    <div class="container">
     <button id="theme-toggle">Toggle Theme</button>
     <h1>Lotto Number Generator</h1>
 
@@ -42,9 +43,11 @@
             <p id="formStatus"></p>
         </form>
     </div>
-  </div>
+  </div> <!-- Close .container -->
+
+  <div id="disqus_thread" class="disqus-section"></div>
+  </div> <!-- Close .main-content-wrapper -->
   <script defer type="text/javascript" src="/main.js"></script>
-  <div id="disqus_thread"></div>
   <script>
       /**
       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
