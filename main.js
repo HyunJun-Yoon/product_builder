@@ -58,4 +58,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         displayElement.appendChild(ul);
     }
+
+    // Contact Form Logic
+    const form = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+
+    if (form) { // Check if form exists on the page
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = 'Thanks for your submission!';
+                    formStatus.className = 'success';
+                    form.reset(); // Clear the form
+                } else {
+                    const data = await response.json();
+                    if (data.errors) {
+                        formStatus.textContent = data.errors.map(error => error.message).join(', ');
+                    } else {
+                        formStatus.textContent = 'Oops! There was a problem submitting your form.';
+                    }
+                    formStatus.className = 'error';
+                }
+            } catch (error) {
+                formStatus.textContent = 'Oops! An error occurred. Please try again later.';
+                formStatus.className = 'error';
+                console.error('Form submission error:', error);
+            }
+        });
+    }
 });

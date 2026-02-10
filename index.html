@@ -24,6 +24,24 @@
     <div id="lotto-numbers">
       <!-- Lotto numbers will be displayed here -->
     </div>
+
+    <div class="contact-form-section">
+        <h1>Contact Us</h1>
+        <form id="contactForm" action="https://formspree.io/f/mqedeerd" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+
+            <p id="formStatus"></p>
+        </form>
+    </div>
   </div>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
