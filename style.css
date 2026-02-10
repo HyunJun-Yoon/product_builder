@@ -32,6 +32,26 @@ body {
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.6;
+    padding-top: 60px; /* Add padding to body to prevent content from being hidden by fixed header */
+}
+
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 1000; /* Ensure it stays on top */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border: 1px solid var(--input-border-color); /* Add a border for better definition */
+}
+
+#theme-toggle:hover {
+    background-color: var(--button-hover-bg-color);
+    cursor: pointer;
 }
 
 .main-content-wrapper {
