@@ -1,71 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lotto Number Generator</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Photo Classifier</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="main-content-wrapper">
     <div class="container">
-      <button id="theme-toggle">Toggle Theme</button>
-      <h1>Lotto Number Generator</h1>
+        <h1>AI image detector</h1>
 
-    <div class="controls">
-      <label for="num-balls">Number of Balls:</label>
-      <input type="number" id="num-balls" value="6" min="1" max="10">
+        <label for="imageUpload" class="upload-area">
+            <input type="file" id="imageUpload" accept="image/*">
+            <p>Drag & Drop your image here, or click to select file</p>
+            <p>(.jpg, .png, .webp, etc.)</p>
+        </label>
+        <div class="image-preview" id="imagePreview">
+            <img id="previewImage" src="#" alt="Image Preview">
+            <p>Upload an image to get started.</p>
+        </div>
 
-      <label for="max-range">Max Range:</label>
-      <input type="number" id="max-range" value="49" min="1" max="99">
+        <button id="classifyButton" disabled>Classify Image</button>
 
-      <button id="generate-lotto">Generate Numbers</button>
+        <div class="results" id="results">
+            <h2>Classification Results</h2>
+            <ul id="predictionsList">
+                <!-- Predictions will be inserted here -->
+            </ul>
+        </div>
     </div>
 
-    <div id="lotto-numbers">
-      <!-- Lotto numbers will be displayed here -->
-    </div>
-
-    <div class="contact-form-section">
-        <h1>Contact Us</h1>
-        <form id="contactForm" action="https://formspree.io/f/mqedeerd" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-
-            <button type="submit">Send Message</button>
-
-            <p id="formStatus"></p>
-        </form>
-    </div>
-    </div> <!-- Close .container -->
-
-  <div id="disqus_thread" class="disqus-section"></div>
-  </div> <!-- Close .main-content-wrapper -->
-  <script defer type="text/javascript" src="/main.js"></script>
-  <script>
-      /**
-      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-      
-      var disqus_config = function () {
-      this.page.url = window.location.href;  // Use current page's URL
-      this.page.identifier = 'lotto-generator-page'; // A unique identifier for this page
-      this.page.title = 'Lotto Number Generator with Contact Form and Comments'; // Page title
-      };
-      
-      (function() { // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          s.src = 'https://productbuilder-aeu448itdo.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <!-- Transformers.js CDN -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
+    <!-- Our application logic -->
+    <script src="main.js"></script>
 </body>
 </html>
