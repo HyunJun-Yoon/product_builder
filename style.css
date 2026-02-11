@@ -100,15 +100,15 @@ body {
 }
 
 h1 {
-    font-size: 3.8em; /* Slightly larger */
-    font-weight: 800; /* Bolder */
-    margin-bottom: 25px; /* More space below */
-    background: -webkit-linear-gradient(45deg, #00C6FF, #0070F3, #7928CA); /* Brighter, more distinct gradient */
+    font-size: 3.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: -webkit-linear-gradient(45deg, var(--color-accent-blue), var(--color-accent-purple)); /* Reverted to original accent colors */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: #E0E0E0; /* Fallback color for wider compatibility */
-    letter-spacing: -0.05em; /* Slightly tighter letter spacing */
-    text-shadow: 0 0 20px rgba(0, 198, 255, 0.8), 0 0 30px rgba(121, 40, 202, 0.5); /* More pronounced glow with multiple shadows */
+    color: var(--color-text-light); /* Fallback color set to light text */
+    letter-spacing: -0.04em;
+    text-shadow: 0 0 10px rgba(0, 112, 243, 0.4), 0 0 20px rgba(121, 40, 202, 0.2); /* Adjusted text-shadow for better readability */
 }
 
 h2 {
