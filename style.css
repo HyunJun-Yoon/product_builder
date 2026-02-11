@@ -65,15 +65,50 @@ body {
 }
 
 
+.language-toggle {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    display: flex;
+    gap: 10px;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.lang-button {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-subtle);
+    padding: 8px 15px;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+}
+
+.lang-button:hover:not(.active) {
+    background-color: #2A2C3A;
+    color: var(--color-text-light);
+    border-color: var(--color-accent-blue);
+}
+
+.lang-button.active {
+    background: linear-gradient(45deg, var(--color-accent-blue), var(--color-accent-purple));
+    color: white;
+    border-color: transparent;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0, 112, 243, 0.3);
+}
+
 h1 {
-    font-size: 3.5em;
-    font-weight: 700;
-    margin-bottom: 20px;
-    background: -webkit-linear-gradient(45deg, var(--color-accent-blue), var(--color-accent-purple));
+    font-size: 3.8em; /* Slightly larger */
+    font-weight: 800; /* Bolder */
+    margin-bottom: 25px; /* More space below */
+    background: -webkit-linear-gradient(45deg, #00C6FF, #0070F3, #7928CA); /* Brighter, more distinct gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.04em;
-    text-shadow: 0 0 15px rgba(0, 112, 243, 0.6);
+    color: #E0E0E0; /* Fallback color for wider compatibility */
+    letter-spacing: -0.05em; /* Slightly tighter letter spacing */
+    text-shadow: 0 0 20px rgba(0, 198, 255, 0.8), 0 0 30px rgba(121, 40, 202, 0.5); /* More pronounced glow with multiple shadows */
 }
 
 h2 {
@@ -168,7 +203,7 @@ h2 {
 button {
     background: linear-gradient(90deg, var(--color-accent-blue) 0%, var(--color-accent-purple) 100%);
     color: white;
-    padding: 18px 40px;
+    padding: 20px 50px; /* Wider padding */
     border: none;
     border-radius: var(--border-radius-main);
     cursor: pointer;
@@ -176,16 +211,21 @@ button {
     font-weight: 600;
     transition: all 0.3s ease;
     margin-top: 40px;
-    box-shadow: 0 6px 20px var(--shadow-light);
-    min-width: 250px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    min-width: 280px; /* Slightly wider min-width */
+    /* Removed letter-spacing and text-transform for more standard look */
 }
 
 button:hover:not(:disabled) {
-    background: var(--color-button-hover-bg);
+    background: linear-gradient(90deg, #00BFFF 0%, #9B59B6 100%); /* Slightly brighter gradient on hover */
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px var(--shadow-medium), 0 0 20px var(--color-accent-blue);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--color-accent-blue); /* More pronounced glow */
+}
+
+button:active:not(:disabled) {
+    transform: translateY(-2px); /* Slightly less lift on active */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 15px var(--color-accent-blue); /* Reduced glow on active */
+    background: linear-gradient(90deg, #0070F3 0%, #7928CA 100%); /* Original gradient */
 }
 
 button:disabled {

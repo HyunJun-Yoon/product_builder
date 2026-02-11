@@ -9,6 +9,10 @@
 </head>
 <body>
     <div class="container">
+        <div class="language-toggle">
+            <button id="langToggleKo" class="lang-button active">한국어</button>
+            <button id="langToggleEn" class="lang-button">English</button>
+        </div>
         <h1>AI image detector</h1>
 
         <label for="imageUpload" class="upload-area">
@@ -21,10 +25,10 @@
             <p>Upload an image to get started.</p>
         </div>
 
-        <button id="classifyButton" disabled>Classify Image</button>
+        <button id="classifyButton" disabled>Detect AI</button>
 
         <div class="results" id="results">
-            <h2>Classification Results</h2>
+            <h2>Detection Results</h2>
             <ul id="predictionsList">
                 <!-- Predictions will be inserted here -->
             </ul>

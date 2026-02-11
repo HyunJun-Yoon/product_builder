@@ -6,21 +6,110 @@ const previewImage = document.getElementById('previewImage');
 const imagePreviewText = document.querySelector('.image-preview p');
 const classifyButton = document.getElementById('classifyButton');
 const predictionsList = document.getElementById('predictionsList');
+const langToggleKo = document.getElementById('langToggleKo');
+const langToggleEn = document.getElementById('langToggleEn');
+
+const uiElements = {
+    h1: document.querySelector('h1'),
+    uploadAreaP1: document.querySelector('.upload-area p:first-of-type'),
+    uploadAreaP2: document.querySelector('.upload-area p:last-of-type'),
+    imagePreviewP: document.querySelector('.image-preview p'),
+    classifyButton: classifyButton,
+    h2: document.querySelector('.results h2'),
+    predictionsList: predictionsList, // Used for innerHTML changes
+};
+
+const translations = {
+    ko: {
+        h1: 'AI 이미지 판별기',
+        uploadAreaP1: '여기에 이미지를 드래그 앤 드롭하거나, 클릭하여 파일을 선택하세요',
+        uploadAreaP2: '(.jpg, .png, .webp 등)',
+        imagePreviewP: '시작하려면 이미지를 업로드하세요.',
+        classifyButton: 'AI 판별하기',
+        h2: '판별 결과',
+        alertModelNotLoaded: 'AI 판별 모델이 아직 로드되지 않았습니다. 잠시 기다려 주세요.',
+        alertUploadImageFirst: '먼저 이미지를 업로드해 주세요.',
+        loadingModel: 'AI 판별 모델 로드 중...',
+        analyzingImage: '이미지 분석 중...',
+        errorLoadingModel: 'AI 판별 모델 로드 오류.',
+        errorDetectingImage: 'AI 이미지 판별 중 오류 발생.',
+        noDetectionResults: '명확한 판별 결과가 없습니다.',
+        aiGenerated: 'AI 생성',
+        humanMade: '사람 제작',
+    },
+    en: {
+        h1: 'AI Image Detector',
+        uploadAreaP1: 'Drag & Drop your image here, or click to select file',
+        uploadAreaP2: '(.jpg, .png, .webp, etc.)',
+        imagePreviewP: 'Upload an image to get started.',
+        classifyButton: 'Detect AI',
+        h2: 'Detection Results',
+        alertModelNotLoaded: 'AI Detector model not loaded yet. Please wait.',
+        alertUploadImageFirst: 'Please upload an image first.',
+        loadingModel: 'Loading AI Detector Model...',
+        analyzingImage: 'Analyzing image...',
+        errorLoadingModel: 'Error loading AI detector model.',
+        errorDetectingImage: 'Error during AI image detection.',
+        noDetectionResults: 'No clear detection results.',
+        aiGenerated: 'AI Generated',
+        humanMade: 'Human Made',
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'ko'; // Default to Korean
+
+function updateUI(lang) {
+    uiElements.h1.textContent = translations[lang].h1;
+    uiElements.uploadAreaP1.textContent = translations[lang].uploadAreaP1;
+    uiElements.uploadAreaP2.textContent = translations[lang].uploadAreaP2;
+    uiElements.imagePreviewP.textContent = translations[lang].imagePreviewP;
+    uiElements.classifyButton.textContent = translations[lang].classifyButton;
+    uiElements.h2.textContent = translations[lang].h2;
+
+    // Update alert messages used in functions
+    // (This is a simplified approach; in a larger app, these would be managed differently)
+    alertModelNotLoadedMsg = translations[lang].alertModelNotLoaded;
+    alertUploadImageFirstMsg = translations[lang].alertUploadImageFirst;
+    loadingModelMsg = translations[lang].loadingModel;
+    analyzingImageMsg = translations[lang].analyzingImage;
+    errorLoadingModelMsg = translations[lang].errorLoadingModel;
+    errorDetectingImageMsg = translations[lang].errorDetectingImage;
+    noDetectionResultsMsg = translations[lang].noDetectionResults;
+    aiGeneratedMsg = translations[lang].aiGenerated;
+    humanMadeMsg = translations[lang].humanMade;
+
+
+    // Update active state of language buttons
+    langToggleKo.classList.remove('active');
+    langToggleEn.classList.remove('active');
+    if (lang === 'ko') {
+        langToggleKo.classList.add('active');
+    } else {
+        langToggleEn.classList.add('active');
+    }
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+}
+
+// Global variables for alert messages (simplified)
+let alertModelNotLoadedMsg, alertUploadImageFirstMsg, loadingModelMsg, analyzingImageMsg,
+    errorLoadingModelMsg, errorDetectingImageMsg, noDetectionResultsMsg, aiGeneratedMsg, humanMadeMsg;
+
 
 // Function to load the AI vs Human Image Detector model
 async function loadModel() {
-    console.log("Loading AI vs Human Image Detector model...");
+    console.log(loadingModelMsg);
     classifyButton.disabled = true; // Disable button while loading
-    classifyButton.textContent = "Loading AI Detector Model...";
+    classifyButton.textContent = loadingModelMsg;
     try {
         classifier = await pipeline('image-classification', 'Ateeqq/ai-vs-human-image-detector');
         console.log("AI vs Human Image Detector model loaded.");
         classifyButton.disabled = false; // Enable button once loaded
-        classifyButton.textContent = "Classify Image";
+        classifyButton.textContent = translations[currentLang].classifyButton;
     } catch (error) {
-        console.error("Failed to load model:", error);
-        predictionsList.innerHTML = '<li>Error loading AI detector model. Please try again or check your internet connection.</li>';
-        classifyButton.textContent = "Error Loading Model";
+        console.error(errorLoadingModelMsg, error);
+        predictionsList.innerHTML = `<li>${errorLoadingModelMsg}</li>`;
+        classifyButton.textContent = errorLoadingModelMsg;
     }
 }
 
@@ -49,32 +138,27 @@ imageUpload.addEventListener('change', (event) => {
 // Function to classify the image
 classifyButton.addEventListener('click', async () => {
     if (!classifier) {
-        alert("AI Detector model not loaded yet. Please wait.");
+        alert(alertModelNotLoadedMsg);
         return;
     }
     if (previewImage.style.display === 'none' || !previewImage.src || previewImage.src === '#') {
-        alert("Please upload an image first.");
+        alert(alertUploadImageFirstMsg);
         return;
     }
 
     classifyButton.disabled = true;
-    classifyButton.textContent = "Detecting AI image...";
-    predictionsList.innerHTML = '<li><p>Analyzing image...</p></li>';
+    classifyButton.textContent = analyzingImageMsg;
+    predictionsList.innerHTML = `<li><p>${analyzingImageMsg}</p></li>`;
 
     try {
-        // Perform classification using the loaded pipeline
         const output = await classifier(previewImage);
-        
-        // Output structure for 'Ateeqq/ai-vs-human-image-detector' is typically
-        // [{ label: 'fake', score: 0.99 }, { label: 'real', score: 0.01 }]
-        // or similar. We want to display the top 2.
         displayPredictions(output);
     } catch (error) {
-        console.error("Error during classification:", error);
-        predictionsList.innerHTML = '<li>Error during AI image detection.</li>';
+        console.error(errorDetectingImageMsg, error);
+        predictionsList.innerHTML = `<li>${errorDetectingImageMsg}</li>`;
     } finally {
         classifyButton.disabled = false;
-        classifyButton.textContent = "Classify Image";
+        classifyButton.textContent = translations[currentLang].classifyButton;
     }
 });
 
@@ -82,20 +166,30 @@ classifyButton.addEventListener('click', async () => {
 function displayPredictions(predictions) {
     predictionsList.innerHTML = ''; // Clear previous predictions
     if (!predictions || predictions.length === 0) {
-        predictionsList.innerHTML = '<li>No clear detection results.</li>';
+        predictionsList.innerHTML = `<li>${noDetectionResultsMsg}</li>`;
         return;
     }
 
-    // Sort by score in descending order and take the top ones
     const sortedPredictions = predictions.sort((a, b) => b.score - a.score);
 
     sortedPredictions.forEach(p => {
         const li = document.createElement('li');
-        const labelText = p.label === 'fake' ? 'AI Generated' : (p.label === 'real' ? 'Human Made' : p.label);
+        let labelText = p.label;
+        if (p.label.toLowerCase().includes('fake')) {
+            labelText = aiGeneratedMsg;
+        } else if (p.label.toLowerCase().includes('real')) {
+            labelText = humanMadeMsg;
+        }
         li.innerHTML = `<span>${labelText}</span> <span>${(p.score * 100).toFixed(2)}%</span>`;
         predictionsList.appendChild(li);
     });
 }
 
+// Add event listeners for language toggle buttons
+langToggleKo.addEventListener('click', () => updateUI('ko'));
+langToggleEn.addEventListener('click', () => updateUI('en'));
+
+// Initialize UI with the current language preference
+updateUI(currentLang);
 // Start loading the model when the page loads
 loadModel();
